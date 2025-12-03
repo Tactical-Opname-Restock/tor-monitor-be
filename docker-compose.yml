@@ -1,0 +1,11 @@
+services:
+  backend:
+    image: screeningin-be
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8086:8000"
+    restart: always
