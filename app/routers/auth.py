@@ -60,10 +60,16 @@ def sign_up(user: UserSign, supabase: SupabaseDependency, db: DBSessionDependenc
 @router.post("/sign_in/", tags=["users"])
 def sign_in(user: UserSign, supabase: SupabaseDependency):
     try:
-        _ = supabase.auth.sign_in_with_password(
+        response = supabase.auth.sign_in_with_password(
             {"email": user.email, "password": user.password}
         )
+        return {
+            "message": "User signed in successfully",
+            "data": {
+                "access_token": response.session.access_token,
+                "token_type": "bearer",
+            },
+        }
     except Exception as e:
         logger.error("Error during signin %s", e)
         raise HTTPException(status_code=400, detail="Error during signin")
-    return {"message": "User signed in successfully"}

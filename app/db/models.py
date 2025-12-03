@@ -23,6 +23,7 @@ class Sales(SQLModel, table=True):
 
     quantity: int = Field(default=0, nullable=False)
     sale_date: datetime = Field(sa_column=Column(DATE), default_factory=datetime.now)
+    created_at: datetime = Field(default_factory=datetime.now)
 
     user: "User" = Relationship(back_populates="sales")
     goods: "Goods" = Relationship(back_populates="sales")
@@ -38,6 +39,7 @@ class RestockInference(SQLModel, table=True):
         sa_column=Column(ARRAY(DATE), nullable=False)
     )
     quantity_needed: List[int] = Field(sa_column=Column(ARRAY(INTEGER), nullable=False))
+    total_quantity: int = Field(default=0, nullable=False)
 
     created_at: datetime = Field(default_factory=datetime.now)
     goods: "Goods" = Relationship(back_populates="restock_inferences")
