@@ -1,6 +1,6 @@
 services:
   backend:
-    image: screeningin-be
+    image: tor-monitor-be
     build:
       context: .
       dockerfile: ./Dockerfile
