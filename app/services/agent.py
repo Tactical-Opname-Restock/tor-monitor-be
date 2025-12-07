@@ -20,11 +20,9 @@ from ..utils.agent_tools import (
     get_all_goods,
     get_forecast_data,
     get_goods_detail,
-    update_goods,
     add_sales,
     get_all_sales,
     get_sales_detail,
-    update_sales,
     delete_sales,
     is_request_valid,
 )
@@ -70,7 +68,6 @@ class AgentService:
             max_tokens=1024,
         )
 
-        # Setup tools untuk agent
         self.tools = self._setup_tools()
 
         prompt = ChatPromptTemplate.from_messages(
@@ -81,12 +78,10 @@ class AgentService:
             ]
         )
 
-        # bikin agent yang bisa call tool
         self.agent = create_tool_calling_agent(
             llm=self.llm, tools=self.tools, prompt=prompt
         )
 
-        # bungkus agent supaya bisa diinvoke
         self.agent_executor = AgentExecutor(
             agent=self.agent,
             tools=self.tools,
@@ -124,7 +119,6 @@ class AgentService:
             )
         )
 
-        # Tool 2: Get goods detail
         def get_goods_detail_tool(goods_id: str = "") -> str:
             try:
                 if not self.db or not self.user_id:
@@ -146,7 +140,6 @@ class AgentService:
             )
         )
 
-        # Tool 3: Add goods
         def add_goods_tool(
             tools_input,
         ) -> str:
@@ -182,43 +175,6 @@ class AgentService:
             )
         )
 
-        # Tool 4: Update goods
-        # def update_goods_tool(tool_input) -> str:
-        #     try:
-        #         print(tool_input)
-        #         data = json.loads(tool_input)
-
-        #         if not self.db or not self.user_id:
-        #             return "❌ Database atau user ID tidak tersedia"
-        #         name_v = data["name"] if data["name"] and data["name"].strip() else None
-        #         price_v = data["price"] if data["price"] > 0 else None
-        #         stock_v = data["stock_quantity"] if data["stock_quantity"] > 0 else None
-        #         cat = (
-        #             data["category"]
-        #             if data["category"] and data["category"].strip()
-        #             else None
-        #         )
-        #         return update_goods(
-        #             db=self.db,
-        #             user_id=UUID(self.user_id),
-        #             goods_id=data["goods_id"],
-        #             name=name_v,
-        #             category=cat,
-        #             price=price_v,
-        #             stock_quantity=stock_v,
-        #         )
-        #     except Exception as e:
-        #         logger.error(f"Error in update_goods: {str(e)}")
-        #         return f"❌ Error mengubah barang: {str(e)}"
-
-        # tools.append(
-        #     Tool(
-        #         name="update_goods",
-        #         func=update_goods_tool,
-        #         description="Mengubah data barang. Parameters: goods_id (wajib), name, price, stock_quantity, category (optional)",
-        #     )
-        # )
-
         def delete_goods_tool(goods_id: str = "") -> str:
             try:
                 if not self.db or not self.user_id:
@@ -240,7 +196,6 @@ class AgentService:
             )
         )
 
-        # Tool 6: Get all sales
         def get_all_sales_tool(name=None) -> str:
             try:
                 if not self.db or not self.user_id:
@@ -264,7 +219,6 @@ class AgentService:
             )
         )
 
-        # Tool 7: Get sales detail
         def get_sales_detail_tool(sales_id: str = "") -> str:
             try:
                 if not self.db or not self.user_id:
@@ -286,7 +240,6 @@ class AgentService:
             )
         )
 
-        # Tool 8: Add sales
         def add_sales_tool(tool_input) -> str:
             try:
                 data = json.loads(tool_input)
@@ -319,35 +272,6 @@ class AgentService:
             )
         )
 
-        # Tool 9: Update sales
-        # def update_sales_tool(
-        #     sales_id: str, quantity: int = 0, sale_date: str = ""
-        # ) -> str:
-        #     try:
-        #         if not self.db or not self.user_id:
-        #             return "❌ Database atau user ID tidak tersedia"
-        #         qty_v = quantity if quantity > 0 else None
-        #         date_v = sale_date if sale_date and sale_date.strip() else None
-        #         return update_sales(
-        #             db=self.db,
-        #             user_id=UUID(self.user_id),
-        #             sales_id=sales_id,
-        #             quantity=qty_v,
-        #             sale_date=date_v,
-        #         )
-        #     except Exception as e:
-        #         logger.error(f"Error in update_sales: {str(e)}")
-        #         return f"❌ Error mengubah penjualan: {str(e)}"
-
-        # tools.append(
-        #     Tool(
-        #         name="update_sales",
-        #         func=update_sales_tool,
-        #         description="Mengubah data transaksi penjualan. Parameters: sales_id (wajib), quantity, sale_date (optional)",
-        #     )
-        # )
-
-        # Tool 10: Delete sales
         def delete_sales_tool(sales_id: str = "") -> str:
             try:
                 if not self.db or not self.user_id:
@@ -369,7 +293,6 @@ class AgentService:
             )
         )
 
-        # Tool 11: Get forecast
         def get_forecast_tool(goods_id=None) -> str:
             try:
                 if not self.db or not self.user_id:
