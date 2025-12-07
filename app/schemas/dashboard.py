@@ -1,6 +1,7 @@
+from typing import List, Optional
 from uuid import UUID
+
 from sqlmodel import SQLModel
-from typing import Optional, List
 
 
 class LowStockGood(SQLModel):
@@ -17,6 +18,7 @@ class SalesChartPoint(SQLModel):
     """Point di chart sales"""
 
     date: str  # Format: YYYY-MM-DD
+    total_quantity: int
     total_sales: float
 
 
