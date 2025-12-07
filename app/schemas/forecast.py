@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 from uuid import UUID
 
 from sqlmodel import SQLModel
@@ -10,7 +10,6 @@ class SalesDatasetItem(SQLModel):
 
     date: str  # Format: YYYY-MM-DD
     total_quantity: int  # Total quantity sold on this date
-    total_profit: Optional[float] = None  # Total profit on this date
 
 
 class ForecastItem(SQLModel):

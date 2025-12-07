@@ -43,7 +43,6 @@ def get_forecast(
                 {
                     "date": str (YYYY-MM-DD),
                     "total_quantity": int,
-                    "total_profit": float
                 }
             ],
             "is_forecasted": bool,
