@@ -9,11 +9,15 @@ dependencies = [
     "fastapi[standard]>=0.115.6",
     "langchain-classic>=1.0.0",
     "langchain-groq>=1.1.0",
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
     "psycopg2-binary>=2.9.10",
     "python-dotenv>=1.0.1",
+    "scikit-learn>=1.7.2",
     "sqlalchemy>=2.0.36",
     "sqlmodel>=0.0.22",
     "supabase>=2.10.0",
+    "xgboost>=3.1.2",
 ]
 
 [tool.ruff]
